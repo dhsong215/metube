@@ -3,7 +3,7 @@ export const videoSearch = (req, res) => {
 };
 
 export const videoWatch = (req, res) => {
-  res.send(`videoWatch /${req.params.id}`);
+  res.render("videoPage", { videoId: req.params.id });
 };
 
 export const videoUpload = (req, res) => {

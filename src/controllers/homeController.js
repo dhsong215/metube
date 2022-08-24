@@ -1,3 +1,3 @@
 export const getHome = (req, res) => {
-  res.send("home here");
+  res.render("home");
 };
