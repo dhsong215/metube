@@ -1,7 +1,5 @@
 extends base.pug
 
-block head
-  p head
-
 block contents 
-  videoPage contents here #{videoId}
+  h3 #{video.views} #{video.views === 1 ? "view" : "views"}
+  a(href=`${video.id}/edit`) edit
