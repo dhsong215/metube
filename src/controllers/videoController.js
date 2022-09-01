@@ -29,10 +29,6 @@ export const getHome = (req, res) => {
   res.render("home", { pageTitle: "Home", videos });
 };
 
-export const videoSearch = (req, res) => {
-  res.send("search");
-};
-
 export const videoWatch = (req, res) => {
   const id = req.params.id;
   const video = videos[id - 1];
@@ -51,4 +47,23 @@ export const postEdit = (req, res) => {
   const video = videos[id - 1];
   video.title = title;
   return res.redirect(`/video/${id}`);
+};
+
+export const getUpload = (req, res) => {
+  res.render("upload", { pageTitle: "upload video" });
+};
+
+export const postUpload = (req, res) => {
+  const { title } = req.body;
+  const newVideo = {
+    title,
+    rating: 0,
+    comments: 0,
+    createdAt: "0 minutes ago",
+    views: 0,
+    id: videos.length + 1,
+  };
+  videos.push(newVideo);
+  const { id } = newVideo;
+  res.redirect(`/video/${id}`);
 };
