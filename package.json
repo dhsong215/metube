@@ -4,7 +4,7 @@
   "description": "metube clone coding",
   "main": "src/server.js",
   "scripts": {
-    "dev": "nodemon --exec babel-node src/server.js"
+    "dev": "nodemon --exec babel-node src/init.js"
   },
   "repository": {
     "type": "git",
