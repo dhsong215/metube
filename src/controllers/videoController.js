@@ -1,14 +1,17 @@
 import Video from "../models/Video";
 
-export const getHome = (req, res) => {
-  Video.find({}, (error, videos) => {
-    res.render("home", { pageTitle: "Home", videos });
-  });
+export const getHome = async (req, res) => {
+  try {
+    const videos = await Video.find({});
+    return res.render("home", { pageTitle: "metube", videos });
+  } catch {
+    return res.render("error on videofind");
+  }
 };
 
 export const videoWatch = (req, res) => {
   const id = req.params.id;
-  res.render("videoPage", { pageTitle: video.title });
+  res.render("videoPage", { pageTitle: "video.title" });
 };
 
 export const getEdit = (req, res) => {
@@ -26,7 +29,19 @@ export const getUpload = (req, res) => {
   res.render("upload", { pageTitle: "upload video" });
 };
 
-export const postUpload = (req, res) => {
-  const { title } = req.body;
-  res.redirect(`/video/${id}`);
+export const postUpload = async (req, res) => {
+  const { title, description, hashtags } = req.body;
+  try {
+    await Video.create({
+      title,
+      description,
+      hashtags: hashtags.split(",").map((word) => `#${word}`),
+    });
+    return res.redirect("/");
+  } catch (error) {
+    return res.render("upload", {
+      pageTitle: "upload video",
+      errorMessage: error._message,
+    });
+  }
 };
