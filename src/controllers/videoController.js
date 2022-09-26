@@ -12,17 +12,34 @@ export const getHome = async (req, res) => {
 export const videoWatch = async (req, res) => {
   const id = req.params.id;
   const video = await Video.findById(id);
+  if (!video) {
+    return res.render("404", { pageTitle: "video not found" });
+  }
   res.render("videoPage", { pageTitle: video.title, video });
 };
 
-export const getEdit = (req, res) => {
+export const getEdit = async (req, res) => {
   const id = req.params.id;
-  res.render("videoEdit", { pageTitle: `Edit` });
+  const video = await Video.findById(id);
+  if (!video) {
+    return res.render("404", { pageTitle: "video not found" });
+  }
+  res.render("videoEdit", { pageTitle: `Edit`, video });
 };
 
-export const postEdit = (req, res) => {
+export const postEdit = async (req, res) => {
   const { id } = req.params;
-  const { title } = req.body;
+  const { title, description, hashtags } = req.body;
+  const video = await Video.findById(id);
+  if (!video) {
+    return res.render("404", { pageTitle: "video not found" });
+  }
+  video.title = title;
+  video.description = description;
+  video.hashtags = hashtags
+    .split(",")
+    .map((word) => (word.startsWith("#") ? word : "#" + word));
+  await video.save();
   return res.redirect(`/video/${id}`);
 };
 
