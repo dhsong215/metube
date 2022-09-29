@@ -1,9 +1,11 @@
 extends base.pug
 
 block contents 
-  h1=video.title
-  p description: #{video.description}
+  h2=video.title
+  h3 description: #{video.description}
   each hashtag in video.hashtags
     p #{hashtag}
   p=video.createdAt
-  a(href=`${video.id}/edit`) edit
+  a(href=`${video.id}/edit`) >edit
+  br
+  a(href=`${video.id}/delete`) >delete video

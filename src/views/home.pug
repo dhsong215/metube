@@ -1,8 +1,8 @@
 extends base.pug
-include mixins/trendings 
+include mixins/videoList
 
 block contents
-    h1 here is trending videos
+    h1 videos
     ul
         each a in videos
             +video(a)
