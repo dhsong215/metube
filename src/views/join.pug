@@ -1,10 +1,17 @@
 extends base
 
 block contents
+    if errorMessage
+        p=errorMessage 
     form(method="POST")
         input(placeholder="E-mail", required, type="text", name="email")
         input(placeholder="Username", required, type="text", name="username")
         input(placeholder="Password", required, type="password", name="password")
+        input(placeholder="Password_Check", required, type="password", name="passwordCheck")
         input(placeholder="Name", required, type="text", name="name")
         input(placeholder="Location", required, type="text", name="location")
         input(type="Submit", value="Join!")
+    hr
+    div 
+        p If you already have account, 
+        a(href="login") login now
