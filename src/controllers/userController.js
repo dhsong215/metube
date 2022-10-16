@@ -52,6 +52,8 @@ export const postLogin = async (req, res) => {
       .status(400)
       .render("login", { pageTitle, errorMessage: "check password or email" });
   }
+  req.session.loggedIn = true;
+  req.session.user = user.username;
   res.redirect("/");
 };
 
