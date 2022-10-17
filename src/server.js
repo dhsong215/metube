@@ -1,6 +1,8 @@
+require("dotenv").config();
 import express from "express";
 import morgan from "morgan";
 import session from "express-session";
+import MongoStore from "connect-mongo";
 
 import rootRouter from "./routers/rootRouter";
 import videoRouter from "./routers/videoRoouter";
@@ -15,9 +17,15 @@ app.use(logger);
 app.use(express.urlencoded({ extended: true }));
 app.use(
   session({
-    secret: "asdfagsdf", //random value
+    secret: process.env.COOKIE_SECRET, //random value
     resave: false,
-    saveUninitialized: true, //almost use resave: false, saveUn..: true
+    saveUninitialized: false, //almost use resave: false, saveUn..: true
+    cookie: {
+      maxAge: 20000,
+    },
+    autoRemove: "interval",
+    autoRemoveInterval: 10,
+    store: MongoStore.create({ mongoUrl: process.env.DB_URL }),
   })
 );
 
