@@ -21,7 +21,7 @@ app.use(
     resave: false,
     saveUninitialized: false, //almost use resave: false, saveUn..: true
     cookie: {
-      maxAge: 20000,
+      maxAge: 200000,
     },
     autoRemove: "interval",
     autoRemoveInterval: 10,

@@ -65,7 +65,8 @@ export const postLogin = async (req, res) => {
 };
 
 export const logout = (req, res) => {
-  res.send("this will be user remove page");
+  req.session.destroy();
+  res.redirect("/");
 };
 
 //깃헙 로그인시 controller의 config에 맞춰 url생성
@@ -125,11 +126,7 @@ export const githubLoginFinish = async (req, res) => {
   const userExisting = await User.findOne({
     email: emailObj.email,
   });
-  if (userExisting) {
-    req.session.loggedIn = true;
-    req.session.user = userExisting;
-    return res.redirect("/");
-  } else {
+  if (!userExisting) {
     await User.create({
       email: emailObj.email,
       username: userData.login,
@@ -139,6 +136,8 @@ export const githubLoginFinish = async (req, res) => {
       socialOnly: true,
       avatarURL: userData.avatarURL,
     });
-    return res.redirect("/");
   }
+  req.session.loggedIn = true;
+  req.session.user = userExisting;
+  return res.redirect("/");
 };
