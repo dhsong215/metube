@@ -11,15 +11,15 @@ html(lang="en")
           ul
             li 
               a(href="/") Home
-            li 
-              a(href="/video/upload") upload
             li
               a(href="/search") search
             if loggedIn
               li
-                a(href="") #{user.username}'s profile
+                a(href="/user/edit") #{user.username}'s edit profile
               li
                 a(href="/user/logout") log out
+              li 
+                a(href="/video/upload") upload
             else
               li
                 a(href="/join") join

@@ -1,0 +1,11 @@
+extends base
+
+block contents
+    form(method="POST")
+        input(placeholder="E-mail", required, type="text", name="email", value=user.email )
+        input(placeholder="Username", required, type="text", name="username", value=user.username )
+        input(placeholder="Name", required, type="text", name="name", value=user.name )
+        input(placeholder="Location", required, type="text", name="location", value=user.location)
+        input(type="Submit", value="Edit!")
+        hr
+        a(href="changepassword") change password

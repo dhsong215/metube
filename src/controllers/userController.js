@@ -107,7 +107,6 @@ export const githubLoginFinish = async (req, res) => {
       },
     })
   ).json();
-  console.log(userData);
   const emailData = await (
     await fetch("https://api.github.com/user/emails", {
       headers: {
@@ -139,5 +138,57 @@ export const githubLoginFinish = async (req, res) => {
   }
   req.session.loggedIn = true;
   req.session.user = userExisting;
+  return res.redirect("/");
+};
+
+export const getUserEdit = (req, res) => {
+  res.render("userEdit", {
+    pageTitle: `Edit ${res.locals.user.username}'s profile`,
+  });
+};
+
+export const postUserEdit = async (req, res) => {
+  const {
+    session: {
+      user: { _id },
+    },
+    body: { email, username, name, location },
+  } = req;
+  await User.findByIdAndUpdate(_id, {
+    email,
+    username,
+    name,
+    location,
+  });
+  req.session.user.email = email;
+  req.session.user.username = username;
+  req.session.user.name = name;
+  req.session.user.location = location;
+  res.redirect("/");
+};
+
+export const getChangePassword = (req, res) => {
+  return res.render("changePassword");
+};
+
+export const postChangePassword = async (req, res) => {
+  const {
+    session: {
+      user: { _id },
+    },
+    body: { password, passwordCheck },
+  } = req;
+  if (password === passwordCheck) {
+    console.log(password);
+    const user = await User.findById(_id);
+    console.log(user);
+    user.password = password;
+    user.save();
+  } else {
+    return res.render("changePassword", {
+      errorMessage: "check password confirm",
+    });
+  }
+  //send notification
   return res.redirect("/");
 };
