@@ -8,7 +8,7 @@ import rootRouter from "./routers/rootRouter";
 import videoRouter from "./routers/videoRoouter";
 import userRouter from "./routers/userRouter";
 
-import { localsMiddleware } from "./middlewares";
+import { localsMiddleware, getProfile } from "./middlewares";
 
 const app = express();
 const logger = morgan("dev");
@@ -30,7 +30,8 @@ app.use(
 );
 
 app.use(localsMiddleware);
-
+app.use("/uploads/profileImages", express.static("uploads/profileImages"));
+app.use("/uploads/videos", express.static("uploads/videos"));
 app.use("/", rootRouter);
 app.use("/video", videoRouter);
 app.use("/user", userRouter);

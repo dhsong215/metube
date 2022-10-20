@@ -4,7 +4,7 @@ import fetch from "node-fetch";
 import User from "../models/User";
 
 export const getJoin = (req, res) => {
-  res.render("join", { pageTitle: "join" });
+  res.render("users/join", { pageTitle: "join" });
 };
 
 export const postJoin = async (req, res) => {
@@ -36,7 +36,7 @@ export const postJoin = async (req, res) => {
 };
 
 export const getLogin = (req, res) => {
-  res.render("login", { pageTitle: "Login" });
+  res.render("users/login", { pageTitle: "Login" });
 };
 
 export const postLogin = async (req, res) => {
@@ -142,7 +142,7 @@ export const githubLoginFinish = async (req, res) => {
 };
 
 export const getUserEdit = (req, res) => {
-  res.render("userEdit", {
+  res.render("users/userEdit", {
     pageTitle: `Edit ${res.locals.user.username}'s profile`,
   });
 };
@@ -150,25 +150,30 @@ export const getUserEdit = (req, res) => {
 export const postUserEdit = async (req, res) => {
   const {
     session: {
-      user: { _id },
+      user: { _id, avatarURL },
     },
     body: { email, username, name, location },
+    file,
   } = req;
   await User.findByIdAndUpdate(_id, {
     email,
     username,
     name,
     location,
+    avatarURL: file ? file.path : avatarURL,
   });
   req.session.user.email = email;
   req.session.user.username = username;
   req.session.user.name = name;
   req.session.user.location = location;
+  if (file) {
+    req.session.user.avatarURL = file.path;
+  }
   res.redirect("/");
 };
 
 export const getChangePassword = (req, res) => {
-  return res.render("changePassword");
+  return res.render("users/changePassword");
 };
 
 export const postChangePassword = async (req, res) => {
