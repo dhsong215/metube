@@ -6,7 +6,12 @@ block contents
   h3 description: #{video.description}
   each hashtag in video.hashtags
     p #{hashtag}
-  p=video.createdAt
-  a(href=`${video.id}/edit`) >edit
-  br
-  a(href=`${video.id}/delete`) >delete video
+  small #{video.createdAt} | created by #{owner.username}
+  if (loggedIn)
+    if String(loggedInUser._id) === String(video.owner)
+      br
+      a(href=`${video.id}/edit`)
+        button Edit video &rarr;
+      br
+      a(href=`${video.id}/delete`) 
+        button Delete video &rarr;

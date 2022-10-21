@@ -10,6 +10,8 @@ const videoSchema = new mongoose.Schema({
     rating: { type: Number, default: 0, required: true },
   },
   fileURL: String,
+  owner: { type: mongoose.Schema.Types.ObjectId, required: true, ref: "User" },
+  //ref 가 없으면 해당 objectID만 가져오지만 ref로 참조하면 해당 id의 username, email 등등을 가져올수 있다
 });
 
 videoSchema.static("formatHashtags", (hashtags) => {
