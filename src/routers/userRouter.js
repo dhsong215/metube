@@ -7,6 +7,7 @@ import {
   githubLoginFinish,
   getChangePassword,
   postChangePassword,
+  userProfile,
 } from "../controllers/userController";
 import {
   protectorMiddleware,
@@ -29,5 +30,6 @@ userRouter
   .all(protectorMiddleware)
   .get(getChangePassword)
   .post(postChangePassword);
+userRouter.route("/:id").get(userProfile);
 
 export default userRouter;

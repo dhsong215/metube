@@ -6,7 +6,6 @@ html(lang="en")
   body
     main
       header 
-        h1=pageTitle
         nav
           ul
             li 
@@ -15,11 +14,13 @@ html(lang="en")
               a(href="/search") search
             if loggedIn
               li
-                a(href="/user/edit") #{user.username}'s edit profile
+                a(href="/user/"+loggedInUser._id) my profile
               li
                 a(href="/user/logout") log out
               li 
                 a(href="/video/upload") upload
+              li 
+                a(href="/user/edit") edit profile
             else
               li
                 a(href="/join") join

@@ -143,7 +143,7 @@ export const githubLoginFinish = async (req, res) => {
 
 export const getUserEdit = (req, res) => {
   res.render("users/userEdit", {
-    pageTitle: `Edit ${res.locals.user.username}'s profile`,
+    pageTitle: `Edit ${res.locals.loggedInUser.username}'s profile`,
   });
 };
 
@@ -196,4 +196,13 @@ export const postChangePassword = async (req, res) => {
   }
   //send notification
   return res.redirect("/");
+};
+
+export const userProfile = async (req, res) => {
+  const { id } = req.params;
+  const user = await User.findById({ id });
+  if (!user) {
+    return res.status(404).render("404");
+  }
+  res.render("users/profilePage", { PageTitle: user.username, user });
 };
