@@ -1,4 +1,9 @@
 extends ../base 
+include ../mixins/videoList
 
 block contents  
-    p #{user.username}
+    p #{user.username}'s profile
+    br
+    h2 Uploads 
+    each video in videos 
+        +video(video)
