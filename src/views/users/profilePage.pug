@@ -5,5 +5,5 @@ block contents
     p #{user.username}'s profile
     br
     h2 Uploads 
-    each video in videos 
+    each video in user.videos
         +video(video)

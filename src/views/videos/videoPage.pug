@@ -10,7 +10,7 @@ block contents
   small
     a(href="/user/" + String(video.owner._id)) #{video.owner.username}
   if (loggedIn)
-    if loggedInUser._id === video.owner._id
+    if (loggedInUser._id == video.owner.id)
       br
       a(href=`${video.id}/edit`)
         button Edit video &rarr;

@@ -16,11 +16,6 @@ export const videoWatch = async (req, res) => {
   if (!video) {
     return res.status(404).render("404", { pageTitle: "video not found" });
   }
-  // console.log(
-  //   "loggedInUser and owner id",
-  //   res.locals.loggedInUser._id,
-  //   video.owner.id
-  // );
   return res.render("videos/videoPage", {
     pageTitle: video.title,
     video,
@@ -64,13 +59,16 @@ export const postUpload = async (req, res) => {
   } = req;
   const { title, description, hashtags } = req.body;
   try {
-    await Video.create({
+    const newVideo = await Video.create({
       title,
       description,
       hashtags: Video.formatHashtags(hashtags),
       fileURL: file.path,
       owner: _id,
     });
+    const user = await User.findById(_id);
+    user.videos.push(newVideo._id);
+    user.save();
     return res.redirect("/");
   } catch (error) {
     return res.render("videos/upload", {

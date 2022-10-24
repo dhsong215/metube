@@ -9,14 +9,13 @@ const userSchema = new mongoose.Schema({
   location: { type: String },
   socialOnly: { type: Boolean, default: false },
   avatarURL: String,
+  videos: [{ type: mongoose.Schema.Types.ObjectId, ref: "Video" }],
 });
 
 userSchema.pre("save", async function () {
-  this.password = await bcrypt.hash(this.password, 8);
-});
-
-userSchema.pre("updateOne", async function () {
-  this.password = await bcrypt.hash(this.password, 8);
+  if (this.isModified("password")) {
+    this.password = await bcrypt.hash(this.password, 8);
+  }
 });
 
 const User = mongoose.model("User", userSchema);

@@ -46,10 +46,10 @@ export const postLogin = async (req, res) => {
   const user = await User.findOne({ email });
   if (!user) {
     const errorMessage = "email doesn't exist";
-    return res.status(400).render("login", { pageTitle, errorMessage });
+    return res.status(400).render("users/login", { pageTitle, errorMessage });
   }
   if (user.socialOnly == true) {
-    return res.status(400).render("login", {
+    return res.status(400).render("users/login", {
       pageTitle,
       errorMessage: "this email can only login for github",
     });
@@ -58,7 +58,10 @@ export const postLogin = async (req, res) => {
   if (!passwordCorrect) {
     return res
       .status(400)
-      .render("login", { pageTitle, errorMessage: "check password or email" });
+      .render("users/login", {
+        pageTitle,
+        errorMessage: "check password or email",
+      });
   }
   req.session.loggedIn = true;
   req.session.user = user;
@@ -201,10 +204,9 @@ export const postChangePassword = async (req, res) => {
 
 export const userProfile = async (req, res) => {
   const { id } = req.params;
-  const user = await User.findOne({ id });
-  const videos = await Video.find({ owner: user._id });
+  const user = await User.findOne({ id }).populate("videos");
   if (!user) {
     return res.status(404).render("404");
   }
-  res.render("users/profilePage", { PageTitle: user.username, user, videos });
+  res.render("users/profilePage", { PageTitle: user.username, user });
 };
