@@ -8,7 +8,7 @@ import rootRouter from "./routers/rootRouter";
 import videoRouter from "./routers/videoRoouter";
 import userRouter from "./routers/userRouter";
 
-import { localsMiddleware, getProfile } from "./middlewares";
+import { localsMiddleware } from "./middlewares";
 
 const app = express();
 const logger = morgan("dev");
