@@ -23,7 +23,7 @@ export const videoWatch = async (req, res) => {
 };
 
 export const getEdit = async (req, res) => {
-  const id = req.params.id;
+  const { id } = req.params;
   const video = await Video.findById(id);
   if (!video) {
     return res.render("404", { pageTitle: "video not found" });

@@ -35,3 +35,14 @@ export const uploadVideo = multer({
     fileSize: 1000000000,
   },
 });
+
+export const videoOwnerProtector = async (req, res, next) => {
+  const {
+    user: { _id },
+  } = req.session;
+  const { id } = req.params;
+  const video = await Video.findById(id);
+  if (_id !== String(video.owner._id)) {
+    return res.status(403).redirect("/");
+  }
+};
