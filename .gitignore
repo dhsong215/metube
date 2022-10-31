@@ -2,3 +2,5 @@
 /uploads
 .env
 /.vscode
+.DS_Store
+/assets/
