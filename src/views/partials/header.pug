@@ -1,0 +1,21 @@
+header 
+        nav
+          ul
+            li 
+              a(href="/") Home
+            li
+              a(href="/search") search
+            if loggedIn
+              li
+                a(href="/user/"+loggedInUser._id) my profile
+              li
+                a(href="/user/logout") log out
+              li 
+                a(href="/video/upload") upload
+              li 
+                a(href="/user/edit") edit profile
+            else
+              li
+                a(href="/join") join
+              li
+                a(href="/login") login
