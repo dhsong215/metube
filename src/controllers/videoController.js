@@ -16,6 +16,7 @@ export const videoWatch = async (req, res) => {
   if (!video) {
     return res.status(404).render("404", { pageTitle: "video not found" });
   }
+  console.log(video.id);
   return res.render("videos/videoPage", {
     pageTitle: video.title,
     video,
@@ -91,4 +92,15 @@ export const videoSearch = async (req, res) => {
     videos = await Video.find({ title: { $regex: new RegExp(keyword, "i") } });
   }
   res.render("search", { pageTitle: "Video Search", videos });
+};
+
+export const registerView = async (req, res) => {
+  const { id } = req.params;
+  const video = await Video.findById(id);
+  if (!video) {
+    return res.sendStatus(404);
+  }
+  video.views += 1;
+  await video.save();
+  return res.sendStatus(200);
 };

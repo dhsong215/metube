@@ -7,6 +7,7 @@ import MongoStore from "connect-mongo";
 import rootRouter from "./routers/rootRouter";
 import videoRouter from "./routers/videoRoouter";
 import userRouter from "./routers/userRouter";
+import apiRouter from "./routers/apiRouter";
 
 import { localsMiddleware } from "./middlewares";
 
@@ -21,7 +22,7 @@ app.use(
     resave: false,
     saveUninitialized: false, //almost use resave: false, saveUn..: true
     cookie: {
-      maxAge: 200000,
+      maxAge: 20000000,
     },
     autoRemove: "interval",
     autoRemoveInterval: 10,
@@ -36,5 +37,6 @@ app.use("/static", express.static("assets"));
 app.use("/", rootRouter);
 app.use("/video", videoRouter);
 app.use("/user", userRouter);
+app.use("/api", apiRouter);
 
 export default app;

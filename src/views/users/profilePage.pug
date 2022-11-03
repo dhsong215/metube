@@ -5,5 +5,8 @@ block contents
     p #{user.username}'s profile
     br
     h2 Uploads 
-    each video in user.videos
-        +video(video)
+    div.video-grid
+        each video in user.videos
+            +video(video)
+        else
+            span.empty__message No Videos found

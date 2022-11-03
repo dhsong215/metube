@@ -2,9 +2,10 @@ header
         nav
           ul
             li 
-              a(href="/") Home
+              a(href="/").header__logo MeTube
             li
-              a(href="/search") search
+              a(href="/search")
+                i.fab.fa-search
             if loggedIn
               li
                 a(href="/user/"+loggedInUser._id) my profile
@@ -16,6 +17,6 @@ header
                 a(href="/user/edit") edit profile
             else
               li
-                a(href="/join") join
+                a(href="/join").header__btn join
               li
-                a(href="/login") login
+                a(href="/login").header__btn login

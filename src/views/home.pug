@@ -2,8 +2,9 @@ extends base.pug
 include mixins/videoList
 
 block contents
-    h1 videos
-    ul
-        each a in videos
-            +video(a)
-            hr
+    h1 treding videos
+    div.video-grid
+        each video in videos
+            +video(video)
+        else
+            span.empty_message No videos found :(
