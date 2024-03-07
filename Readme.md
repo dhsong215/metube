@@ -1,3 +1,3 @@
 # MeTube
 
-lets study clone coding
+youtube clone coding
